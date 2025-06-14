@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class CustomerUseCaseImpl implements CustomerUseCase {
-
     private final CustomerRepository customerRepository;
 
     @Override
@@ -19,7 +18,10 @@ public class CustomerUseCaseImpl implements CustomerUseCase {
 
     @Override
     public String sendRequest(String document) {
-        //External call to request card queue
+        var customer = this.customerRepository.findByDocument(document).get();
+        var requests = customer.getRequests();
+        customer.setRequests(requests + 1);
+        this.customerRepository.saveAndFlush(customer);
         return "Card requested successfully";
     }
 }

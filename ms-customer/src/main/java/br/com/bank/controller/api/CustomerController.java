@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/customers")
 public class CustomerController {
-
     private final CustomerUseCase customerUseCase;
 
     public CustomerController(CustomerUseCase customerUseCase) {
@@ -20,15 +19,17 @@ public class CustomerController {
         createCustomer(customerRequest);
     }
 
-    @PostMapping("/request-card/{document}")
-    public String requestCard(@PathVariable String document)   {
-            return this.customerUseCase.sendRequest(document);
+    @GetMapping("/request-card")
+    public String requestCard(@RequestParam(name = "document") String document) {
+        return this.customerUseCase.sendRequest(document);
     }
     
     private void createCustomer(CustomerRequest customerRequest) {
-        this.customerUseCase.createCustomer(Customer.builder()
-                        .email(customerRequest.getEmail())
-                        .document(customerRequest.getDocument())
-                .build());
+        this.customerUseCase.createCustomer(
+            Customer.builder()
+                .email(customerRequest.getEmail())
+                .document(customerRequest.getDocument())
+                .build()
+        );
     }
 }

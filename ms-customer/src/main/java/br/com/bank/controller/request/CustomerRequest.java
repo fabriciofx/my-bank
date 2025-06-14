@@ -1,15 +1,17 @@
 package br.com.bank.controller.request;
 
-
-import br.com.bank.model.Customer;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class CustomerRequest {
-
-    private final String email;
-    private final String document;
+    private String email;
+    private String document;
 }
